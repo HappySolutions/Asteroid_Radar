@@ -77,7 +77,7 @@ dependencies {
     // Koin main features for Android
     implementation "org.koin:koin-android:$koin_android_version"
     // Koin Android Scope features
-    implementation "org.koin:koin-android-scope:Skoin_version"
+    implementation "org.koin:koin-android-scope:$koin_android_version"
     // Koin Android ViewModeL features
     implementation "org.koin:koin-android-viewmodel:$koin_android_version"
     // Koin Android Experimental features
