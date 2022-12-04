@@ -5,12 +5,13 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.udacity.asteroidradar.Asteroid
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AsteroidsDatabaseDao {
     @Insert
-    suspend fun insertAll(vararg manyAstroids: Asteroid)
+     fun insertAll(vararg manyAsteroids: Asteroid)
 
     @Query("SELECT * FROM asteroids_table")
-    suspend fun getAllAstroids(): LiveData<List<Asteroid>>
+     fun getAllAstroids(): Flow<List<Asteroid>>
 }
