@@ -73,4 +73,16 @@ dependencies {
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    // Koin main features for Android
+    implementation "org.koin:koin-android:$koin_android_version"
+    // Koin Android Scope features
+    implementation "org.koin:koin-android-scope:Skoin_version"
+    // Koin Android ViewModeL features
+    implementation "org.koin:koin-android-viewmodel:$koin_android_version"
+    // Koin Android Experimental features
+    implementation "org.koin:koin-android-ext:$koin_android_version"
 }
+
+
+
