@@ -25,3 +25,21 @@ data class Asteroid(
     val distanceFromEarth: Double,
     @ColumnInfo(name = "isPotentiallyHazardous")
     val isPotentiallyHazardous: Boolean) : Parcelable
+
+
+//الفانكشن دى نستبدلها بالفانكشن البارسينج ف كلاس networkutils
+//fun List<Asteroid>.asDatabaseModel(): Array<Asteroid> {
+//    return map {
+//        Asteroid(
+//            id = it.id,
+//            codename = it.codename,
+//            closeApproachDate = it.closeApproachDate,
+//            absoluteMagnitude = it.absoluteMagnitude,
+//            estimatedDiameter = it.estimatedDiameter,
+//            relativeVelocity = it.relativeVelocity,
+//            distanceFromEarth = it.distanceFromEarth,
+//            isPotentiallyHazardous = it.isPotentiallyHazardous
+//        )
+//    }.toTypedArray()
+
+//}
