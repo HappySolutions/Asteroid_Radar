@@ -10,12 +10,15 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AsteroidsDatabaseDao {
+    @Query("SELECT * FROM asteroids_table WHERE closeApproachDate >= :startDate AND closeApproachDate <= :endDate ORDER BY closeApproachDate ASC")
+    fun getAsteroidsByCloseApproachDate(startDate: String, endDate: String): Flow<List<Asteroid>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     //want to know about vararg and why not List<Asteroid> *Look at ApiInterface
     //should I use insert to get the list of Asteroids??
      fun insertAll(vararg manyAsteroids: Asteroid)
 
-    @Query("SELECT * FROM asteroids_table")
+    @Query("SELECT * FROM asteroids_table ORDER BY closeApproachDate ASC")
     //want to understand about using Flow here
      fun getAllAsteroids(): Flow<List<Asteroid>>
 }

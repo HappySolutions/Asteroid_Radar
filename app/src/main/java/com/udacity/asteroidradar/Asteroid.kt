@@ -4,42 +4,60 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
+import com.google.gson.annotations.SerializedName
 
+@JsonClass(generateAdapter = true)
 @Entity(tableName = "asteroids_table")
 @Parcelize
 data class Asteroid(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    @PrimaryKey(autoGenerate = false)
+    @SerializedName("id")
+    val id: Long?,
+
     @ColumnInfo(name = "codename")
-    val codename: String,
+    @SerializedName("codename")
+    val codename: String?,
+
     @ColumnInfo(name = "closeApproachDate")
-    val closeApproachDate: String,
+    @SerializedName("codename")
+    val closeApproachDate: String?,
+
     @ColumnInfo(name = "absoluteMagnitude")
-    val absoluteMagnitude: Double,
+    @SerializedName("absoluteMagnitude")
+    val absoluteMagnitude: Double?,
+
     @ColumnInfo(name = "estimatedDiameter")
-    val estimatedDiameter: Double,
+    @SerializedName("estimatedDiameter")
+    val estimatedDiameter: Double?,
+
     @ColumnInfo(name = "relativeVelocity")
-    val relativeVelocity: Double,
+    @SerializedName("relativeVelocity")
+    val relativeVelocity: Double?,
+
     @ColumnInfo(name = "distanceFromEarth")
-    val distanceFromEarth: Double,
+    @SerializedName("distanceFromEarth")
+    val distanceFromEarth: Double?,
+
     @ColumnInfo(name = "isPotentiallyHazardous")
-    val isPotentiallyHazardous: Boolean) : Parcelable
+    @SerializedName("isPotentiallyHazardous")
+    val isPotentiallyHazardous: Boolean?
 
+    ) : Parcelable
 
-//الفانكشن دى نستبدلها بالفانكشن البارسينج ف كلاس networkutils
-//fun List<Asteroid>.asDatabaseModel(): Array<Asteroid> {
-//    return map {
-//        Asteroid(
-//            id = it.id,
-//            codename = it.codename,
-//            closeApproachDate = it.closeApproachDate,
-//            absoluteMagnitude = it.absoluteMagnitude,
-//            estimatedDiameter = it.estimatedDiameter,
-//            relativeVelocity = it.relativeVelocity,
-//            distanceFromEarth = it.distanceFromEarth,
-//            isPotentiallyHazardous = it.isPotentiallyHazardous
-//        )
-//    }.toTypedArray()
-
-//}
+fun ArrayList<Asteroid>.asDomainModel(): Array<Asteroid> {
+    return map {
+        Asteroid(
+            id = it.id,
+            codename = it.codename,
+            closeApproachDate = it.closeApproachDate,
+            absoluteMagnitude = it.absoluteMagnitude,
+            estimatedDiameter = it.estimatedDiameter,
+            relativeVelocity = it.relativeVelocity,
+            distanceFromEarth = it.distanceFromEarth,
+            isPotentiallyHazardous = it.isPotentiallyHazardous
+        )
+    }
+        .toTypedArray()
+}

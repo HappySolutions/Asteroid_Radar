@@ -82,6 +82,8 @@ dependencies {
     implementation "org.koin:koin-android-viewmodel:$koin_android_version"
     // Koin Android Experimental features
     implementation "org.koin:koin-android-ext:$koin_android_version"
+    // gson - for parsing json
+    implementation 'com.google.code.gson:gson:2.9.0'
 }
 
 

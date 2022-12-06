@@ -2,22 +2,31 @@ package com.udacity.asteroidradar.database
 
 import androidx.lifecycle.LiveData
 import com.udacity.asteroidradar.Asteroid
-import com.udacity.asteroidradar.api.RetrofitBuilder
+import com.udacity.asteroidradar.Constants
+import com.udacity.asteroidradar.Constants.IMAGE_MEDIA_TYPE
+import com.udacity.asteroidradar.api.*
+import com.udacity.asteroidradar.asDomainModel
+import com.udacity.asteroidradar.models.PictureOfDay
 //import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import okhttp3.ResponseBody
 import okhttp3.internal.wait
+import org.json.JSONObject
 import retrofit2.await
 
 class MainRepository(private val database: AsteroidsDataBase) : DataSource {
-    override suspend fun refreshData() {
+    override suspend fun refreshData()
+    {
+        var response: Asteroid? = null
         withContext(Dispatchers.IO) {
-            val response = RetrofitBuilder.retrofitService.getAsteroids()
+             response  = RetrofitBuilder.retrofitService.getAsteroids()
             // I changed *response.results.asDatabaseModel() to *response.results as ArrayList<Asteroid> but give error
             //مش مفروض هنا نستخدم الفانكشن اللى هما ادوهالنا
-            database.asteroidsDatabaseDao.insertAll(*response as Array<Asteroid>)
+            var asteroidList = parseAsteroidsJsonResult(JSONObject(response.toString()))
+            database.asteroidsDatabaseDao.insertAll(*asteroidList.asDomainModel())
         }
     }
 
@@ -25,5 +34,23 @@ class MainRepository(private val database: AsteroidsDataBase) : DataSource {
         return database.asteroidsDatabaseDao.getAllAsteroids()
     }
 
+    override suspend fun getNasaPic(): PictureOfDay? {
+        var pictureOfDay: PictureOfDay? = null
+        withContext(Dispatchers.IO) {
+            pictureOfDay = RetrofitBuilder.retrofitService.getNasaImage()
+        }
+        if (pictureOfDay?.mediaType == IMAGE_MEDIA_TYPE) {
+            return pictureOfDay
+        }
+        return null
+    }
 
+    override suspend fun onWeekAsteroidsClicked(): Flow<List<Asteroid>> {
+        return database.asteroidsDatabaseDao.getAsteroidsByCloseApproachDate(getToday(), getSeventhDay())
+    }
+    override suspend fun onTodayAsteroidsClicked(): Flow<List<Asteroid>> {
+        return database.asteroidsDatabaseDao.getAsteroidsByCloseApproachDate(getToday(), getToday())
+    }override suspend fun onSavedAsteroidsClicked(): Flow<List<Asteroid>> {
+        return database.asteroidsDatabaseDao.getAllAsteroids()
+    }
 }

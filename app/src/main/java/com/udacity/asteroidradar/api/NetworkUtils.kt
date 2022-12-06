@@ -1,7 +1,13 @@
 package com.udacity.asteroidradar.api
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.Constants
+import com.udacity.asteroidradar.api.RetrofitBuilder.retrofitService
+import com.udacity.asteroidradar.models.PictureOfDay
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
@@ -50,10 +56,27 @@ private fun getNextSevenDaysFormattedDates(): ArrayList<String> {
     val calendar = Calendar.getInstance()
     for (i in 0..Constants.DEFAULT_END_DATE_DAYS) {
         val currentTime = calendar.time
-        val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
-        formattedDateList.add(dateFormat.format(currentTime))
+        formattedDateList.add(formatDate(calendar.time))
         calendar.add(Calendar.DAY_OF_YEAR, 1)
     }
 
     return formattedDateList
 }
+
+fun getToday(): String {
+    val calendar = Calendar.getInstance()
+    return formatDate(calendar.time)
+}
+
+fun getSeventhDay(): String {
+    val calendar = Calendar.getInstance()
+    calendar.add(Calendar.DAY_OF_YEAR, 7)
+    return formatDate(calendar.time)
+}
+
+private fun formatDate(date: Date): String {
+    val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
+    return dateFormat.format(date)
+}
+
+
