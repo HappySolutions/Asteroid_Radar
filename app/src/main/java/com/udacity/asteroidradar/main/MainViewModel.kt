@@ -2,6 +2,7 @@ package com.udacity.asteroidradar.main
 
 import android.app.Application
 import android.util.Log
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.lifecycle.*
 import com.udacity.asteroidradar.Asteroid
@@ -32,14 +33,15 @@ class MainViewModel(private val mainRepo: DataSource,
         onViewSavedAsteroidsClicked()
         viewModelScope.launch {
             try {
-                refreshPictureOfDay()
-                //mainRepo.refreshData()
-                //getAsteroids()
+                //refreshPictureOfDay()
+                mainRepo.refreshData()
             } catch (e: Exception) {
                 Log.e("MainViewModel", e.message.toString())
                 Toast.makeText(application, "Failure: ${e.message}", Toast.LENGTH_LONG).show()
             }
         }
+        getAsteroids()
+
     }
 
     private suspend fun refreshPictureOfDay() {
@@ -47,7 +49,7 @@ class MainViewModel(private val mainRepo: DataSource,
     }
 
     private fun getAsteroids() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             mainRepo.getAllAsteroids().collect {
                 _asteroidList.value = it
             }
@@ -55,7 +57,7 @@ class MainViewModel(private val mainRepo: DataSource,
     }
 
     fun onViewWeekAsteroidsClicked() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Main) {
             mainRepo.onWeekAsteroidsClicked()
                 .collect { asteroids ->
                     _asteroidList.value = asteroids

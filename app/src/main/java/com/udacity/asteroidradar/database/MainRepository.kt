@@ -1,5 +1,6 @@
 package com.udacity.asteroidradar.database
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.Constants
@@ -20,12 +21,15 @@ import retrofit2.await
 class MainRepository(private val database: AsteroidsDataBase) : DataSource {
     override suspend fun refreshData()
     {
-        var response: Asteroid? = null
+//        var response: Asteroid? = null
         withContext(Dispatchers.IO) {
-             response  = RetrofitBuilder.retrofitService.getAsteroids()
+            val response  = RetrofitBuilder.retrofitService.getAsteroids().await()
+            Log.i("MainRepository", response.toString())
             // I changed *response.results.asDatabaseModel() to *response.results as ArrayList<Asteroid> but give error
             //مش مفروض هنا نستخدم الفانكشن اللى هما ادوهالنا
-            var asteroidList = parseAsteroidsJsonResult(JSONObject(response.toString()))
+            var asteroidList = parseAsteroidsJsonResult(JSONObject(response.string()))
+            Log.i("MainRepository", asteroidList.size.toString())
+
             database.asteroidsDatabaseDao.insertAll(*asteroidList.asDomainModel())
         }
     }

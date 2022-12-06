@@ -20,10 +20,10 @@ interface ApiInterface {
     //I want to this function to return Asteroid so tha on MainRepository not call await() and on the second function
     //I pass the response as it is since fun insertAll(vararg manyAsteroids: Asteroid) on Dao takes vararg
     @GET("/neo/rest/v1/feed")
-     suspend fun getAsteroids(@Query("start_date") startDate: String = START_DATE,
-                    @Query("end_date") endDate: String = END_DATE,
+      fun getAsteroids(@Query("start_date") startDate: String = getToday(),
+                    @Query("end_date") endDate: String = getSeventhDay(),
                     @Query("api_key") apiKey: String = API_KEY
-    ): Asteroid
+    ): Deferred<ResponseBody>
 
     @GET("/planetary/apod")
     suspend fun getNasaImage(@Query("api_key") apiKey: String = API_KEY): PictureOfDay
