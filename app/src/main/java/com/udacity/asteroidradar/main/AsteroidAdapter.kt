@@ -21,7 +21,7 @@ class AsteroidAdapter(private val clickListener: AsteroidListener) :
 
         fun bind(item: Asteroid, clickListener: AsteroidListener) {
             binding.asterid = item
-            //binding.clickListener = clickListener
+            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
         companion object {
@@ -34,7 +34,6 @@ class AsteroidAdapter(private val clickListener: AsteroidListener) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        //var view: View = LayoutInflater.from(parent.context).inflate(R.layout.asteroid_list_item, parent, false)
         return  ViewHolder.from(parent)
     }
 
@@ -55,7 +54,4 @@ class AsteroidDiffCallback : DiffUtil.ItemCallback<Asteroid>() {
     override fun areContentsTheSame(oldItem: Asteroid, newItem: Asteroid): Boolean {
         return oldItem == newItem
     }
-}
-class AsteroidListener(val clickListener: (asteroid: Asteroid) -> Unit) {
-    fun onClick(asteroid: Asteroid) = clickListener(asteroid)
 }

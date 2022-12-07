@@ -9,15 +9,17 @@
             type="com.udacity.asteroidradar.Asteroid" />
         <variable
             name="clickListener"
-            type="com.udacity.asteroidradar.main.AsteroidAdapter" />
+            type="com.udacity.asteroidradar.main.AsteroidListener" />
     </data>
     <androidx.cardview.widget.CardView
         app:cardElevation="4dp"
         android:layout_height="70dp"
+        app:cardBackgroundColor="@color/cardview_dark_background"
         android:layout_marginVertical="4dp"
         android:layout_width="match_parent"
         app:cardCornerRadius="4dp"
         android:padding="@dimen/card_padding"
+        android:onClick="@{() -> clickListener.onClick(asterid)}"
         android:layout_margin="@dimen/item_margin">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,6 +28,7 @@
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
+                android:padding="8dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintLeft_toLeftOf="parent"

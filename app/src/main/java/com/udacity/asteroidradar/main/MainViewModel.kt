@@ -89,6 +89,8 @@ class MainViewModel(private val mainRepo: DataSource,
 
     }
     fun onAsteroidClicked(asteroid: Asteroid) {
+//        Toast.makeText(context, "clicked recyclerView", Toast.LENGTH_LONG).show()
+
         _goToDetailFragment.value = asteroid
     }
     fun finishNavigating() {

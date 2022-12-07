@@ -3,6 +3,7 @@ package com.udacity.asteroidradar.main
 import android.os.Bundle
 import android.view.*
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import com.udacity.asteroidradar.R
@@ -11,18 +12,13 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class MainFragment : Fragment() {
 
-//    private val viewModel: MainViewModel by lazy {
-//        ViewModelProvider(this).get(MainViewModel::class.java)
-//    }
     private val viewModel: MainViewModel by sharedViewModel()
     private lateinit var binding: FragmentMainBinding
     private var progressBar: ProgressBar? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        var adapter = AsteroidAdapter(AsteroidListener{
-                asteroid -> viewModel.onAsteroidClicked(asteroid)
-        })
+
 
         binding =FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = this
@@ -30,6 +26,13 @@ class MainFragment : Fragment() {
 
         progressBar = binding.statusLoadingWheel
         progressBar?.visibility = View.VISIBLE
+        var adapter = AsteroidAdapter(AsteroidListener{
+
+                asteroid ->
+            Toast.makeText(context, "clicked recyclerView", Toast.LENGTH_LONG).show()
+
+            viewModel.onAsteroidClicked(asteroid)
+        })
         setupRecyclerViewAdapter(adapter)
         setupObservers(adapter)
 
