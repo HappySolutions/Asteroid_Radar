@@ -27,13 +27,17 @@ class MainViewModel(private val mainRepo: DataSource,
     val pictureOfDay: LiveData<PictureOfDay>
         get() = _pictureOfDay
 
+    private val _goToDetailFragment = MutableLiveData<Asteroid>()
+    val goToDetailFragment: LiveData<Asteroid>
+        get() = _goToDetailFragment
+
     init {
         onViewWeekAsteroidsClicked()
         onViewTodayAsteroidsClicked()
         onViewSavedAsteroidsClicked()
         viewModelScope.launch {
             try {
-                //refreshPictureOfDay()
+                refreshPictureOfDay()
                 mainRepo.refreshData()
             } catch (e: Exception) {
                 Log.e("MainViewModel", e.message.toString())
@@ -84,5 +88,10 @@ class MainViewModel(private val mainRepo: DataSource,
 
 
     }
-
+    fun onAsteroidClicked(asteroid: Asteroid) {
+        _goToDetailFragment.value = asteroid
+    }
+    fun finishNavigating() {
+        _goToDetailFragment.value = null
+    }
 }

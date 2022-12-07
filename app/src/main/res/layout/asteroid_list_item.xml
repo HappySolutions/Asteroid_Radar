@@ -7,6 +7,9 @@
         <variable
             name="asterid"
             type="com.udacity.asteroidradar.Asteroid" />
+        <variable
+            name="clickListener"
+            type="com.udacity.asteroidradar.main.AsteroidAdapter" />
     </data>
     <androidx.cardview.widget.CardView
         app:cardElevation="4dp"

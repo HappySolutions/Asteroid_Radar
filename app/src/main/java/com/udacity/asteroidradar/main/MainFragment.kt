@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
+import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
@@ -20,8 +21,9 @@ class MainFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         var adapter = AsteroidAdapter(AsteroidListener{
-            //TODO
+                asteroid -> viewModel.onAsteroidClicked(asteroid)
         })
+
         binding =FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
@@ -30,6 +32,7 @@ class MainFragment : Fragment() {
         progressBar?.visibility = View.VISIBLE
         setupRecyclerViewAdapter(adapter)
         setupObservers(adapter)
+
         setHasOptionsMenu(true)
 
         return binding.root
@@ -52,20 +55,18 @@ class MainFragment : Fragment() {
 
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_overflow_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.view_week_asteroids -> viewModel.onViewWeekAsteroidsClicked()
+            R.id.view_today_asteroids -> viewModel.onViewTodayAsteroidsClicked()
+            R.id.view_saved_asteroids -> viewModel.onViewSavedAsteroidsClicked()
+        }
+        return true
+    }
 }
-
-
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        inflater.inflate(R.menu.main_overflow_menu, menu)
-//        super.onCreateOptionsMenu(menu, inflater)
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            R.id.view_week_asteroids -> viewModel.onViewWeekAsteroidsClicked()
-//            R.id.view_today_asteroids -> viewModel.onViewTodayAsteroidsClicked()
-//            R.id.view_saved_asteroids -> viewModel.onViewSavedAsteroidsClicked()
-//        }
-//        return true
-//    }
-//}

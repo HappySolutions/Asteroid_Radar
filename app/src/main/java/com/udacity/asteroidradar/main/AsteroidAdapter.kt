@@ -17,11 +17,8 @@ class AsteroidAdapter(private val clickListener: AsteroidListener) :
             notifyDataSetChanged()
         }
 
-    class ViewHolder (private val binding: AsteroidListItemBinding) : RecyclerView.ViewHolder(binding.root) {
-//        fun bind(item: Asteroid) {
-//            binding.asterid = item
-//            binding.executePendingBindings()
-//        }
+    class ViewHolder private constructor (private val binding: AsteroidListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+
         fun bind(item: Asteroid, clickListener: AsteroidListener) {
             binding.asterid = item
             //binding.clickListener = clickListener
@@ -41,9 +38,6 @@ class AsteroidAdapter(private val clickListener: AsteroidListener) :
         return  ViewHolder.from(parent)
     }
 
-//    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        holder.bind(asterList[position])
-//    }
 
     override fun getItemCount() = asterList.size
 
