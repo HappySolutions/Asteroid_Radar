@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface DataSource {
     suspend fun refreshData()
-    //can I use suspend with flow
     suspend fun getAllAsteroids(): Flow<List<Asteroid>>
     suspend fun getNasaPic(): PictureOfDay?
     suspend fun onWeekAsteroidsClicked(): Flow<List<Asteroid>>

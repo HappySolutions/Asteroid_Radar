@@ -14,10 +14,8 @@ interface AsteroidsDatabaseDao {
     fun getAsteroidsByCloseApproachDate(startDate: String, endDate: String): Flow<List<Asteroid>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    //want to understand more about vararg and why not List<Asteroid> *Look at ApiInterface
      fun insertAll(vararg manyAsteroids: Asteroid)
 
     @Query("SELECT * FROM asteroids_table ORDER BY closeApproachDate ASC")
-    //want to understand about using Flow here
      fun getAllAsteroids(): Flow<List<Asteroid>>
 }
