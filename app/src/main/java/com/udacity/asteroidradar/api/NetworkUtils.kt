@@ -1,13 +1,8 @@
 package com.udacity.asteroidradar.api
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.Constants
-import com.udacity.asteroidradar.api.RetrofitBuilder.retrofitService
-import com.udacity.asteroidradar.models.PictureOfDay
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.udacity.asteroidradar.Constants.API_QUERY_DATE_FORMAT
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*

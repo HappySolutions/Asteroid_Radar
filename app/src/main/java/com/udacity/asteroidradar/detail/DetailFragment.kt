@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.databinding.FragmentDetailBinding
-import com.udacity.asteroidradar.databinding.FragmentMainBinding
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class DetailFragment : Fragment() {
@@ -18,7 +17,7 @@ class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = FragmentDetailBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
@@ -27,9 +26,6 @@ class DetailFragment : Fragment() {
 
         binding.asteroid = asteroid
         listObserver()
-//        binding.helpButton.setOnClickListener {
-//            displayAstronomicalUnitExplanationDialog()
-//        }
 
         return binding.root
     }
