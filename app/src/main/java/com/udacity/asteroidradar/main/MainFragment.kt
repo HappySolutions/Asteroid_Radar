@@ -34,7 +34,7 @@ class MainFragment : Fragment() {
         val adapter = AsteroidAdapter(AsteroidListener{
 
                 asteroid ->
-            Toast.makeText(context, "clicked recyclerView", Toast.LENGTH_LONG).show()
+            //Toast.makeText(context, "clicked recyclerView", Toast.LENGTH_LONG).show()
 
             viewModel.onAsteroidClicked(asteroid)
         })
